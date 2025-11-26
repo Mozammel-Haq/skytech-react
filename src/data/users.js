@@ -1,0 +1,63 @@
+export const users = [
+  {
+    id: 'user-1001',
+    name: 'Avery Johnson',
+    email: 'avery@skytech.test',
+    role: 'customer',
+    avatar: '/assets/users/avery.svg',
+    addresses: [
+      {
+        id: 'addr-1',
+        label: 'Home',
+        line1: '221 Innovation Way',
+        line2: 'Suite 502',
+        city: 'San Francisco',
+        state: 'CA',
+        postalCode: '94107',
+        country: 'United States',
+        default: true,
+      },
+    ],
+    paymentMethods: [
+      {
+        id: 'card-1',
+        brand: 'SkyCard',
+        last4: '4242',
+        expMonth: 12,
+        expYear: 2027,
+        default: true,
+      },
+    ],
+  },
+  {
+    id: 'user-1002',
+    name: 'Jonas Becker',
+    email: 'jonas@skytech.test',
+    role: 'customer',
+    avatar: '/assets/users/jonas.svg',
+    addresses: [
+      {
+        id: 'addr-2',
+        label: 'Home',
+        line1: '88 Infinite Loop',
+        line2: null,
+        city: 'Berlin',
+        state: 'BE',
+        postalCode: '10115',
+        country: 'Germany',
+        default: true,
+      },
+    ],
+    paymentMethods: [],
+  },
+  {
+    id: 'user-admin-1',
+    name: 'SkyTech Admin',
+    email: 'admin@skytech.test',
+    role: 'admin',
+    avatar: '/assets/users/admin.svg',
+    passwordHint: 'Admin@123',
+    addresses: [],
+    paymentMethods: [],
+  },
+]

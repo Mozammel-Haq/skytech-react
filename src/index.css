@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  color: #111827;
+  background-color: #f9fafb;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f9fafb;
+}
+
+a {
+  color: inherit;
+}
+
+/* Make Swiper navigation arrows smaller and white */
+.swiper-button-next,
+.swiper-button-prev {
+  color: rgb(14 165 164) !important; /* arrow color */
+  width: 28px !important; /* smaller width */
+  height: 28px !important; /* smaller height */
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 18px !important;
+}
+
+.swiper-button-next {
+  right: 8px !important; /* optional: adjust spacing from edge */
+}
+
+.swiper-button-prev {
+  left: 8px !important; /* optional: adjust spacing from edge */
+}
