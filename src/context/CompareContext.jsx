@@ -16,20 +16,9 @@ function compareReducer(state, action) {
   switch (action.type) {
     case 'HYDRATE':
       return { ...state, items: action.payload }
-    case 'ADD_ITEM': {
-      if (state.items.length >= MAX_COMPARE_ITEMS) {
-        toast.info(`You can compare up to ${MAX_COMPARE_ITEMS} products at once`)
-        return state
-      }
-      if (state.items.find((item) => item.id === action.payload.id)) {
-        toast.info('Already in compare list')
-        return state
-      }
-      toast.success('Added to compare')
+    case 'ADD_ITEM':
       return { ...state, items: [...state.items, action.payload] }
-    }
     case 'REMOVE_ITEM':
-      toast.info('Removed from compare list')
       return { ...state, items: state.items.filter((item) => item.id !== action.payload) }
     case 'CLEAR':
       return { ...state, items: [] }
@@ -50,7 +39,7 @@ export function CompareProvider({ children }) {
           return { items: Array.isArray(parsed) ? parsed : [] }
         }
       } catch (error) {
-        toast.error('Could not restore compare list')
+        console.error('Could not restore compare list')
       }
       return init
     },
@@ -64,9 +53,25 @@ export function CompareProvider({ children }) {
     }
   }, [state.items])
 
-  const addItem = (item) => dispatch({ type: 'ADD_ITEM', payload: item })
+  const addItem = (item) => {
+    if (state.items.length >= MAX_COMPARE_ITEMS) {
+      toast.info(`You can compare up to ${MAX_COMPARE_ITEMS} products at once`)
+      return
+    }
+    if (state.items.find((x) => x.id === item.id)) {
+      toast.info('Already in compare list')
+      return
+    }
+    dispatch({ type: 'ADD_ITEM', payload: item })
+    toast.success('Added to compare')
+  }
 
-  const removeItem = (id) => dispatch({ type: 'REMOVE_ITEM', payload: id })
+  const removeItem = (id) => {
+    if (state.items.find((x) => x.id === id)) {
+      dispatch({ type: 'REMOVE_ITEM', payload: id })
+      toast.info('Removed from compare list')
+    }
+  }
 
   const clear = () => dispatch({ type: 'CLEAR' })
 

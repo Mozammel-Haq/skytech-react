@@ -14,15 +14,10 @@ function wishlistReducer(state, action) {
   switch (action.type) {
     case 'HYDRATE':
       return { ...state, items: action.payload }
-    case 'TOGGLE_ITEM': {
-      const exists = state.items.find((item) => item.id === action.payload.id)
-      if (exists) {
-        toast.info('Removed from wishlist')
-        return { ...state, items: state.items.filter((item) => item.id !== action.payload.id) }
-      }
-      toast.success('Saved to wishlist')
+    case 'ADD_ITEM':
       return { ...state, items: [...state.items, action.payload] }
-    }
+    case 'REMOVE_ITEM':
+      return { ...state, items: state.items.filter((item) => item.id !== action.payload) }
     case 'CLEAR':
       return { ...state, items: [] }
     default:
@@ -42,7 +37,7 @@ export function WishlistProvider({ children }) {
           return { items: Array.isArray(parsed) ? parsed : [] }
         }
       } catch (error) {
-        toast.error('Could not restore wishlist')
+        console.error('Could not restore wishlist')
       }
       return init
     },
@@ -56,7 +51,16 @@ export function WishlistProvider({ children }) {
     }
   }, [state.items])
 
-  const toggleItem = (item) => dispatch({ type: 'TOGGLE_ITEM', payload: item })
+  const toggleItem = (item) => {
+    const exists = state.items.find((x) => x.id === item.id)
+    if (exists) {
+      dispatch({ type: 'REMOVE_ITEM', payload: item.id })
+      toast.info('Removed from wishlist')
+    } else {
+      dispatch({ type: 'ADD_ITEM', payload: item })
+      toast.success('Saved to wishlist')
+    }
+  }
 
   const clearWishlist = () => dispatch({ type: 'CLEAR' })
 

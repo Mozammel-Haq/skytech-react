@@ -4,9 +4,10 @@ import DataTable from '../../components/dashboard/DataTable.jsx'
 import { useMemo, useCallback } from 'react'
 import { FiArrowRight } from 'react-icons/fi'
 import dayjs from 'dayjs'
+import { FiTrash2 } from 'react-icons/fi'
 
 function OrdersAdmin() {
-  const { orders, updateStatus } = useOrders()
+  const { orders, updateStatus,deleteOrder } = useOrders()
 
   // advance order status
   const advanceStatus = useCallback((order) => {
@@ -30,22 +31,41 @@ function OrdersAdmin() {
     total: `$${o.total.toFixed(2)}`,
     items: o.items.map(i => `${i.title} x${i.quantity}`).join(', '),
     shippingAddress: `${o.shippingAddress.line1}, ${o.shippingAddress.city}`,
-    actions: (
-      <select
-        className="rounded border border-neutral-300 px-2 py-1 text-xs dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200"
-        value={o.status}
-        onChange={(e) => updateStatus(o.id, e.target.value)}
-      >
-        {statusFlow.map((s) => (
-          <option key={s} value={s}>
-            {s.charAt(0).toUpperCase() + s.slice(1)}
-          </option>
-        ))}
-      </select>
-    ),
+actions: (
+  <div className="flex items-center gap-2">
+
+    {/* Status dropdown */}
+    <select
+      className="rounded border border-neutral-300 px-2 py-1 text-xs dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200"
+      value={o.status}
+      onChange={(e) => updateStatus(o.id, e.target.value)}
+    >
+      {statusFlow.map((s) => (
+        <option key={s} value={s}>
+          {s.charAt(0).toUpperCase() + s.slice(1)}
+        </option>
+      ))}
+    </select>
+
+    {/* Delete icon button */}
+    <button
+      onClick={() => {
+        if (window.confirm("Are you sure you want to delete this order?")) {
+          deleteOrder(o.id)
+        }
+      }}
+      className="p-1 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded"
+      title="Delete Order"
+    >
+      <FiTrash2 size={16} />
+    </button>
+  </div>
+),
+
+
   }))
 }, [orders, updateStatus])
-
+// console.log(orders)
 
   // table columns
   const columns = useMemo(() => [

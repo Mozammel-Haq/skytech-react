@@ -1,7 +1,7 @@
 import { FiGlobe, FiMapPin, FiPhoneCall } from 'react-icons/fi'
 import clsx from 'clsx'
 import useScrollDirection from '../../hooks/useScrollDirection.js'
-
+import { Link } from 'react-router-dom'
 function Topbar() {
   const direction = useScrollDirection({ threshold: 8 })
 
@@ -25,9 +25,9 @@ function Topbar() {
             <FiPhoneCall className="text-sm" />
             Customer Service
           </span>
-          <a href="#track-order" className="hidden md:inline-flex items-center gap-1 underline">
+          <Link to="/track-order" className="hidden md:inline-flex items-center gap-1 underline">
             Track Order
-          </a>
+          </Link>
         </div>
         <div className="flex items-center gap-4">
           <button type="button" className="inline-flex items-center gap-1 text-xs">

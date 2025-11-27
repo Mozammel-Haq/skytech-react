@@ -8,6 +8,7 @@ import ProductPrice from './ProductPrice.jsx'
 const backdropVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
+  exit: { opacity: 0 },
 }
 
 const modalVariants = {
@@ -17,27 +18,31 @@ const modalVariants = {
 }
 
 function QuickViewModal({ product, isOpen, onClose, onAddToCart }) {
-  if (!product) return null
+  const isVisible = Boolean(product) && Boolean(isOpen)
 
-  const defaultVariant = product.variants?.[0]
+  const defaultVariant = product?.variants?.[0]
   const navigate = useNavigate()
 
   return (
-    <AnimatePresence>
-      {isOpen && (
+    <AnimatePresence initial={false}>
+      {isVisible && (
         <motion.div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
           initial="hidden"
           animate="visible"
-          exit="hidden"
+          exit="exit"
           variants={backdropVariants}
           role="dialog"
           aria-modal="true"
           aria-labelledby="quick-view-title"
         >
           <motion.div
+            key={product.id}
             className="w-full max-w-4xl rounded-3xl bg-white shadow-2xl dark:bg-neutral-900 dark:shadow-none"
             variants={modalVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
           >
             <div className="flex flex-col md:flex-row">
               <div className="md:w-1/2 border-b border-neutral-200 md:border-b-0 md:border-r dark:border-neutral-700">

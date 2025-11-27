@@ -33,7 +33,13 @@ function ordersReducer(state, action) {
 
     case 'ADD_ORDER':
       return { ...state, orders: [action.payload, ...state.orders] }
-
+    case 'DELETE_ORDER': {
+  const { id } = action.payload
+  return {
+    ...state,
+    orders: state.orders.filter(o => o.id !== id)
+  }
+}
     case 'UPDATE_STATUS': {
       const { id, status } = action.payload
       const timestamp = dayjs().toISOString()
@@ -183,6 +189,21 @@ export function OrdersProvider({ children }) {
     (order) => dispatch({ type: 'ADD_ORDER', payload: order }),
     []
   )
+const deleteOrder = useCallback(async (id) => {
+  // optimistic UI update
+  dispatch({ type: 'DELETE_ORDER', payload: { id } })
+
+  try {
+    const numericId = id.toString().replace('ord-', '')
+    const res = await axios.post(`${API_BASE}/testorder/delete/${numericId}`, {
+      id: numericId
+    })
+    console.log("Delete Success:", res)
+  } catch (err) {
+    console.error("Failed to delete order:", err)
+    // Optional: re-fetch orders if delete failed
+  }
+}, [])
 
   const updateStatus = useCallback(async (id, status) => {
     dispatch({ type: 'UPDATE_STATUS', payload: { id, status } })
@@ -208,6 +229,7 @@ export function OrdersProvider({ children }) {
   const createOrder = useCallback(async (order) => {
     try {
       const res = await axios.post(SAVE_ENDPOINT, order)
+      console.log('Create Success:', res)
       const data = res?.data
       const raw = Array.isArray(data) ? data[0] : data?.order ?? data
       const created = normalizeOrder(raw ?? order)
@@ -253,6 +275,7 @@ export function OrdersProvider({ children }) {
       updateStatus,
       appendTracking,
       createOrder,
+      deleteOrder,
       getById,
       getByOrderNumber,
       getByIdOrNumber,
@@ -265,6 +288,7 @@ export function OrdersProvider({ children }) {
       updateStatus,
       appendTracking,
       createOrder,
+      deleteOrder,
       getById,
       getByOrderNumber,
       getByIdOrNumber,
