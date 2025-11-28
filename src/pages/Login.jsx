@@ -53,9 +53,6 @@ return (
             Sign in
           </button>
         </form>
-        <p className="mt-3 text-xs text-neutral-600 dark:text-neutral-400">
-          Admin: admin@skytech.test / Admin@123
-        </p>
         <p className="mt-3 text-sm text-neutral-900 dark:text-neutral-100">
           No account?{' '}
           <Link to="/signup" className="text-primary">

@@ -1,24 +1,70 @@
 import { Helmet } from 'react-helmet-async'
-import DashboardCard from '../../components/dashboard/DashboardCard.jsx'
-import { useProducts } from '../../context/ProductContext.jsx'
-import { useOrders } from '../../context/OrdersContext.jsx'
+import WelcomeCard from '../../components/dashboard/WelcomeCard.jsx'
+import StatsCards from '../../components/dashboard/StatsCards.jsx'
+import SalesChart from '../../components/dashboard/SalesChart.jsx'
+import TopProductsChart from '../../components/dashboard/TopProductsChart.jsx'
+import CustomersChart from '../../components/dashboard/CustomersChart.jsx'
+import RecentOrders from '../../components/dashboard/RecentOrders.jsx'
+import { useDashboard } from '../../context/DashboardContext.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 
-function SuperAdminDashboard() {
-  const { products } = useProducts()
-  const { orders } = useOrders()
+export default function SuperAdminDashboard() {
+  const { stats, loading, exportToExcel } = useDashboard()
+  const { user } = useAuth() // username
+
+  if (loading) return <p>Loading dashboard...</p>
+  if (!stats) return <p>Unable to load dashboard.</p>
+
+  // compute small progress example (delivered / total)
+  const progress = stats.totalOrders ? (stats.deliveredOrders / stats.totalOrders) * 100 : 0
+
   return (
     <>
-      <Helmet>
-        <title>Super Admin — Dashboard</title>
-      </Helmet>
-      <div className="grid gap-4 md:grid-cols-4">
-        <DashboardCard title="Products" value={products.length} />
-        <DashboardCard title="Orders" value={orders.length} />
-        <DashboardCard title="Admins" value={1} />
-        <DashboardCard title="Customers" value={2} />
+      <Helmet><title>Super Admin — Dashboard</title></Helmet>
+
+      <div className="grid gap-4 md:grid-cols-3 items-start">
+  {/* Welcome card takes 2/3 */}
+  <div className="md:col-span-2">
+    <WelcomeCard 
+      userName={user?.name ?? 'Admin'} 
+      pendingOrders={stats.pendingOrders} 
+      progress={progress} 
+    />
+  </div>
+
+  {/* StatsCards takes 1/3 */}
+  <div className="md:col-span-1">
+    <StatsCards stats={stats} />
+  </div>
+</div>
+
+
+      <div className="grid gap-4 md:grid-cols-3 mt-4">
+  <div className="md:col-span-2">
+    <SalesChart 
+      data={stats} 
+      exportHandler={(rows, filename) => exportToExcel(rows, filename, 'Sales')} 
+    />
+  </div>
+
+  <div className="md:col-span-1">
+    <TopProductsChart 
+      data={stats.topProducts} 
+      exportHandler={(rows, filename) => exportToExcel(rows, filename, 'TopProducts')} 
+    />
+  </div>
+</div>
+
+
+
+      <div className="grid gap-4 md:grid-cols-3 mt-4">
+        <div className="md:col-span-2">
+          <CustomersChart data={stats.customerGrowth} exportHandler={(rows, filename) => exportToExcel(rows, filename, 'Customers')} />
+        </div>
+        <div>
+          <RecentOrders rows={stats.recentOrders} />
+        </div>
       </div>
     </>
   )
 }
-
-export default SuperAdminDashboard

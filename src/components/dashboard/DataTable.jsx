@@ -139,7 +139,7 @@ function DataTable({ columns, rows, actions = [], rowsPerPageOptions = [5, 10, 2
                     <div className="flex gap-2">
                       {actions.map((a) => (
                         <button
-                          key={a.label}
+                          key={a.key}
                           type="button"
                           onClick={() => a.onClick(row)}
                           className="flex items-center justify-center rounded-full border border-neutral-200 px-3 py-1 text-xs font-semibold dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-800"

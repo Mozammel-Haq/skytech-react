@@ -24,7 +24,7 @@ function OrdersAdmin() {
   return orders.map((o) => ({
     id: o.id,
     orderNumber: o.orderNumber,
-    userId: o.userId,
+    userId: "User-00" + o.userId,
     status: o.status.charAt(0).toUpperCase() + o.status.slice(1),
     placedAt: dayjs(o.placedAt).format('YYYY-MM-DD HH:mm'),
     fulfilledAt: o.fulfilledAt ? dayjs(o.fulfilledAt).format('YYYY-MM-DD HH:mm') : '-',
