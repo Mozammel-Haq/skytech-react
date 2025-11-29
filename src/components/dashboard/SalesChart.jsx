@@ -36,7 +36,7 @@ export default function SalesChart({ data = {}, exportHandler }) {
   }, [view, data])
 
   return (
-    <div className="p-4 rounded-2xl bg-white dark:bg-neutral-800 shadow-sm">
+    <div className="p-4 rounded-2xl bg-white dark:bg-neutral-800 shadow-sm md:mt-[-30px]">
       <div className="flex justify-between items-center mb-3">
         <h4 className="font-semibold">Sales Analytics</h4>
 

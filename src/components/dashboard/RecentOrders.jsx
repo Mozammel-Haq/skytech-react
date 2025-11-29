@@ -12,7 +12,6 @@ export default function RecentOrders({ rows = [] }) {
               <th className="p-2">Customer</th>
               <th className="p-2">Amount</th>
               <th className="p-2">Status</th>
-              <th className="p-2">Date</th>
             </tr>
           </thead>
           <tbody>
@@ -22,7 +21,6 @@ export default function RecentOrders({ rows = [] }) {
                 <td className="p-2">{r.customer_name ?? r.user_id ?? '—'}</td>
                 <td className="p-2">{r.total_amount ?? '—'}</td>
                 <td className="p-2"><span className={`px-2 py-1 rounded text-xs ${r.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : r.status === 'delivered' ? 'bg-green-100 text-green-800' : 'bg-neutral-100 text-neutral-800'}`}>{r.status}</span></td>
-                <td className="p-2">{r.created_at}</td>
               </tr>
             ))}
           </tbody>

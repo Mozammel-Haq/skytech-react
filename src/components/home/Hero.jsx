@@ -62,7 +62,7 @@ function Hero() {
   return (
     <section className="container grid gap-6 py-10 lg:grid-cols-[2fr,1fr] lg:gap-8">
       {/* Hero Swiper */}
-      <div className="relative overflow-hidden rounded-4xl border border-neutral-200 bg-neutral-900 text-white shadow-soft dark:bg-neutral-800 dark:border-neutral-600">
+      <div className="relative overflow-hidden rounded-4xl border border-neutral-200 bg-primary text-white shadow-soft dark:bg-neutral-800 dark:border-neutral-600">
         <Swiper
           modules={[Pagination, Autoplay, A11y]}
           pagination={{ clickable: true }}
@@ -141,17 +141,17 @@ function Hero() {
             }}
           >
             {/* Dark overlay for readability */}
-            <div className="absolute inset-0 bg-black/60 dark:bg-black/60"></div>
+            <div className="absolute inset-0 bg-black/40 dark:bg-black/40"></div>
 
             {/* Card content */}
             <div className="relative z-10 flex flex-col h-full p-6 gap-2">
-              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-primary dark:text-teal-300">
+              <span className=" text-xs font-bold uppercase tracking-[0.1em] text-neutral-100">
                 Best value pick
               </span>
               <h3 className="mt-2 text-xl font-semibold text-white dark:text-neutral-100">{product.title}</h3>
               <p className="mt-1 text-sm text-white/80 dark:text-neutral-300 line-clamp-2 w-3/4">{product.description}</p>
               <div className="mt-auto flex items-center justify-between pt-4">
-                <span className="text-sm font-semibold text-primary dark:text-teal-300">Shop now</span>
+                <span className="bg-primary shadow-sm w-fit p-2 rounded text-xs font-semibold text-neutral-100">Shop now</span>
               </div>
             </div>
           </Link>

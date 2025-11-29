@@ -57,14 +57,20 @@ export default function SuperAdminDashboard() {
 
 
 
-      <div className="grid gap-4 md:grid-cols-3 mt-4">
-        <div className="md:col-span-2">
-          <CustomersChart data={stats.customerGrowth} exportHandler={(rows, filename) => exportToExcel(rows, filename, 'Customers')} />
-        </div>
-        <div>
-          <RecentOrders rows={stats.recentOrders} />
-        </div>
-      </div>
+      <div className="grid gap-4 md:grid-cols-2 mt-4">
+          <div>
+    <RecentOrders rows={stats.recentOrders} />
+  </div>
+  <div>
+    <CustomersChart
+      monthlyData={stats.customerGrowth}
+      dailyData={stats.customerGrowthDaily}
+      exportHandler={(rows, filename) => exportToExcel(rows, filename, 'Customers')}
+    />
+  </div>
+
+</div>
+
     </>
   )
 }

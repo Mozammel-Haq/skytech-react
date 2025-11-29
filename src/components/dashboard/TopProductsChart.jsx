@@ -54,7 +54,7 @@ export default function TopProductsRadialChart({ data = [], exportHandler }) {
         <ResponsiveContainer>
           <RadialBarChart
             cx="50%"
-            cy="45%"
+            cy="40%"
             innerRadius="15%"
             outerRadius="80%"
             barSize={25}
@@ -68,22 +68,37 @@ export default function TopProductsRadialChart({ data = [], exportHandler }) {
               clockWise
               dataKey="uv"
               label={({ cx, cy, midAngle, innerRadius, outerRadius, index }) => {
-                const entry = parsed[index]
-                const radius = innerRadius + (outerRadius - innerRadius) / 2
-                const x = cx + radius * Math.cos(-midAngle * Math.PI / 180)
-                const y = cy + radius * Math.sin(-midAngle * Math.PI / 180)
-                return (
-                  <text
-                    x={x}
-                    y={y}
-                    fill="#fff"
-                    textAnchor={x > cx ? 'start' : 'end'}
-                    dominantBaseline="central"
-                  >
-                    {`${entry.percentage}%`}
-                  </text>
-                )
-              }}
+  const entry = parsed[index];
+
+  // If any geometry value missing → avoid NaN error
+  if (
+    cx == null ||
+    cy == null ||
+    midAngle == null ||
+    innerRadius == null ||
+    outerRadius == null
+  ) {
+    return null;
+  }
+
+  const radius = innerRadius + (outerRadius - innerRadius) / 2;
+  const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
+  const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
+
+  return (
+    <text
+      x={x}
+      y={y}
+      fill="#fff"
+      fontSize="12"
+      textAnchor={x > cx ? 'start' : 'end'}
+      dominantBaseline="central"
+    >
+      {entry.percentage}%
+    </text>
+  );
+}}
+
             />
             <Tooltip content={<CustomTooltip />} />
           </RadialBarChart>

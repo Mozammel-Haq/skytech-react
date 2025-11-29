@@ -8,6 +8,7 @@ import { useProducts } from '../../context/ProductContext.jsx'
 
 /* ------------------- Desktop Mega Menu ------------------- */
 function DesktopMegaMenu({ categories }) {
+  const media_base_url = import.meta.env.VITE_BASE_MEDIA_URL
   const [activeCategory, setActiveCategory] = useState(null)
   const [isHovered, setIsHovered] = useState(false)
 
@@ -99,7 +100,7 @@ function DesktopMegaMenu({ categories }) {
                         </p>
                         {category.image && (
                           <img
-                            src={category.image}
+                            src={`${media_base_url}/products/${category.image}`}
                             alt={category.name}
                             className="mt-4 h-28 w-full object-contain"
                             loading="lazy"
