@@ -119,7 +119,7 @@ export function AuthProvider({ children }) {
   // Update profile with Axios
   const updateProfile = async (data) => {
   if (!user) return;
-  // console.log(user);
+  console.log(user);
   try {
     const { data: updated } = await axios.put(`${BASE_URL}/testuser/update/${user.id}`, {
       id: user.id,

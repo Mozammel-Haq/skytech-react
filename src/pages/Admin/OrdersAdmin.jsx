@@ -47,6 +47,15 @@ actions: (
       ))}
     </select>
 
+    <button
+  onClick={() => window.location.href = `orders/${o.id}/invoice`}
+  className="p-1 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 rounded"
+  title="View Invoice"
+>
+  <FiArrowRight size={16} />
+</button>
+
+
     {/* Delete icon button */}
     <button
       onClick={() => {

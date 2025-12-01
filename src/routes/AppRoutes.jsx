@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import MainLayout from '../components/layout/MainLayout.jsx'
+import AdminInvoice from '../pages/Admin/AdminInvoice.jsx'
 
 // Lazy-loaded pages
 const HomePage = lazy(() => import('../pages/Home.jsx'))
@@ -75,6 +76,7 @@ function AppRoutes() {
           <Route index element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="orders" element={<AdminOrders />} />
+          <Route path="orders/:id/invoice" element={<AdminInvoice />} /> 
           <Route path="categories" element={<AdminCategories />} />
           <Route path="brands" element={<AdminBrands />} />
           <Route path="returns" element={<AdminReturns />} />
@@ -86,6 +88,7 @@ function AppRoutes() {
           <Route index element={<SuperAdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="orders" element={<AdminOrders />} />
+          <Route path="orders/:id/invoice" element={<AdminInvoice />} /> 
           <Route path="categories" element={<AdminCategories />} />
           <Route path="brands" element={<AdminBrands />} />
           <Route path="returns" element={<AdminReturns />} />

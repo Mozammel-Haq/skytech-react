@@ -43,3 +43,37 @@ a {
 .swiper-button-prev {
   left: 8px !important; /* optional: adjust spacing from edge */
 }
+
+@media print {
+  button, aside, nav, header, footer {
+    display: none !important;
+  }
+  body, html {
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Invoice container */
+  .invoice-container {
+    page-break-inside: avoid;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  @media print {
+  body {
+    background: #fff !important; /* whole page white */
+    color: #000 !important;       /* default text black */
+  }
+
+  /* Force background colors for table head and footer */
+  table thead, table tfoot, .bg-neutral-100, .dark .bg-neutral-800 {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+
+}
+
+}

@@ -15,7 +15,7 @@ const heroSlides = [
     tagline: 'AI camera that sees in the dark',
     description:
       'Capture stellar nights, all-day battery, and vivid 120Hz OLED in a featherweight body.',
-    image: './assets/products/smartphone-ultra-front.jpg',
+    image: './skytech/assets/products/smartphone-ultra-front.jpg',
     cta: {
       label: 'Shop flagship phones',
       to: '/shop?category=smartphones&deal=1',
@@ -28,7 +28,7 @@ const heroSlides = [
     tagline: 'Pixels calibrated for perfection',
     description:
       'Mini-LED brilliance, RTX studio power, and silent thermals crafted for creators.',
-    image: './assets/products/laptop-creator-open.jpg',
+    image: 'skytech/assets/products/laptop-creator-open.jpg',
     cta: {
       label: 'Explore creator rigs',
       to: '/shop?category=laptops&segment=creator',
@@ -41,7 +41,7 @@ const heroSlides = [
     tagline: 'Atmosphere that reacts to your world',
     description:
       'Dynamic scenes, music-reactive glow, and Matter-ready control for every room.',
-    image: './assets/products/smarthome-light-scene.jpg',
+    image: 'skytech/assets/products/smarthome-light-scene.jpg',
     cta: {
       label: 'Brighten your space',
       to: '/shop?category=smart-home&segment=lighting',
@@ -113,7 +113,7 @@ function Hero() {
                   {/* Background image */}
                   <motion.div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url("${slide.image}")` }}
+                    style={{ backgroundImage: `url(${slide.image})` }}
                     initial={{ scale: 1.05 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}

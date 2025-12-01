@@ -132,7 +132,7 @@ const normalizeTracking = (t) => ({
 })
 
 const normalizeOrder = (o) => ({
-  id: o?.id ? `ord-${o.id}` : '',
+  id: o?.id ? `${o.id}` : '',
   orderNumber: o?.orderNumber ?? o?.order_number ?? '',
   userId: o?.userId ?? o?.user_id ?? '',
   status: o?.status ?? 'pending',
