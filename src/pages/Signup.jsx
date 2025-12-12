@@ -14,7 +14,7 @@ function Signup() {
   e.preventDefault();
   if (!name || !email || !password) return;
   try {
-    await register({ name, email, password, role_id: 2 });
+    await register({ name, email, password, role_id: 3 });
     navigate('/account');
   } catch (err) {
     console.error(err);

@@ -4,11 +4,14 @@ import { Helmet } from "react-helmet-async";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiHeart, FiBarChart2 } from "react-icons/fi";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 import { useProducts } from "../context/ProductContext.jsx";
 import { useCart } from "../context/CartContext.jsx";
 import { useWishlist } from "../context/WishlistContext.jsx";
 import { useCompare } from "../context/CompareContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
 function Product() {
   const { slug } = useParams();
@@ -19,6 +22,7 @@ function Product() {
   const { addItem } = useCart();
   const { items: wishlistItems, toggleItem } = useWishlist();
   const { items: compareItems, addItem: addCompare } = useCompare();
+  const { user, isAuthenticated } = useAuth();
 
   const product = getProductBySlug(slug);
 
@@ -30,6 +34,9 @@ function Product() {
   const [activeVariantId, setActiveVariantId] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [tab, setTab] = useState("description");
+  const [reviewText, setReviewText] = useState("");
+  const [rating, setRating] = useState(5);
+  const [submittingReview, setSubmittingReview] = useState(false);
 
   // -----------------------------
   // When product loads/changes: reset image index & init variant
@@ -438,20 +445,74 @@ function Product() {
                       Rated {product.rating}★ by {product.reviewsCount} customers
                     </p>
 
-                    <form className="space-y-3">
-                      <input
-                        type="text"
-                        placeholder="Your name"
+                    <form
+                      className="space-y-3"
+                      onSubmit={async (e) => {
+                        e.preventDefault();
+                        if (!isAuthenticated) {
+                          toast.error("Please login to submit a review");
+                          return;
+                        }
+                        if (!product?.id) return;
+                        if (!reviewText.trim()) {
+                          toast.error("Please write your review");
+                          return;
+                        }
+                        try {
+                          setSubmittingReview(true);
+                          const payload = {
+                            product_id: parseInt(product.id.replace(/^p-/, ""), 10),
+                            user_id: Number(user?.id) || parseInt(user?.id, 10),
+                            rating: Number(rating),
+                            review: reviewText.trim(),
+                          };
+                          const { data } = await axios.post(
+                            "http://localhost/elctro_Ecom_project/admin/api/testproductreview/save",
+                            payload,
+                            user?.token
+                              ? { headers: { Authorization: `Bearer ${user.token}` } }
+                              : undefined
+                          );
+                          console.log(data)
+                          if (data?.success === "yes") {
+                            toast.success("Review submitted");
+                            setReviewText("");
+                            setRating(5);
+                          } else {
+                            toast.error("Review not allowed");
+                          }
+                        } catch (err) {
+                          toast.error(err.response?.data?.message || "Failed to submit review");
+                        } finally {
+                          setSubmittingReview(false);
+                        }
+                      }}
+                    >
+                      <select
+                        value={rating}
+                        onChange={(e) => setRating(Number(e.target.value))}
                         className="h-11 w-full rounded-xl border border-neutral-200 px-3 text-sm"
-                      />
+                      >
+                        <option value={5}>5 ★★★★★</option>
+                        <option value={4}>4 ★★★★</option>
+                        <option value={3}>3 ★★★</option>
+                        <option value={2}>2 ★★</option>
+                        <option value={1}>1 ★</option>
+                      </select>
 
                       <textarea
+                        value={reviewText}
+                        onChange={(e) => setReviewText(e.target.value)}
                         placeholder="Write a review"
                         className="min-h-24 w-full rounded-xl border border-neutral-200 px-3 py-2 text-sm"
                       />
 
-                      <button type="button" className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white">
-                        Submit review
+                      <button
+                        type="submit"
+                        disabled={submittingReview}
+                        className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white disabled:opacity-60"
+                      >
+                        {submittingReview ? "Submitting..." : "Submit review"}
                       </button>
                     </form>
                   </div>
