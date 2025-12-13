@@ -8,6 +8,8 @@ import { useProducts } from '../../context/ProductContext.jsx'
 import 'swiper/css'
 import 'swiper/css/pagination'
 
+const baseURL = import.meta.env.VITE_BASE_URL;
+
 const heroSlides = [
   {
     id: 'hero-smartphones',
@@ -15,7 +17,7 @@ const heroSlides = [
     tagline: 'AI camera that sees in the dark',
     description:
       'Capture stellar nights, all-day battery, and vivid 120Hz OLED in a featherweight body.',
-    image: './skytech/assets/products/smartphone-ultra-front.jpg',
+    image: `${baseURL}/skytech/assets/products/smartphone-ultra-front.jpg`,
     cta: {
       label: 'Shop flagship phones',
       to: '/shop?category=smartphones&deal=1',
@@ -28,7 +30,7 @@ const heroSlides = [
     tagline: 'Pixels calibrated for perfection',
     description:
       'Mini-LED brilliance, RTX studio power, and silent thermals crafted for creators.',
-    image: 'skytech/assets/products/laptop-creator-open.jpg',
+    image: `${baseURL}/skytech/assets/products/laptop-creator-open.jpg`,
     cta: {
       label: 'Explore creator rigs',
       to: '/shop?category=laptops&segment=creator',
@@ -41,7 +43,7 @@ const heroSlides = [
     tagline: 'Atmosphere that reacts to your world',
     description:
       'Dynamic scenes, music-reactive glow, and Matter-ready control for every room.',
-    image: 'skytech/assets/products/smarthome-light-scene.jpg',
+    image: `${baseURL}/skytech/assets/products/smarthome-light-scene.jpg`,
     cta: {
       label: 'Brighten your space',
       to: '/shop?category=smart-home&segment=lighting',

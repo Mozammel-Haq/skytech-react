@@ -26,7 +26,6 @@ function CategoriesGrid() {
       <motion.div
         key={category.id}
         custom={index}
-        variants={cardVariants}
         className="group rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg dark:border-neutral-700 dark:bg-neutral-800"
       >
         {/* Top Badge */}

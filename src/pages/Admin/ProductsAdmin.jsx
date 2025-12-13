@@ -73,7 +73,7 @@ function ProductsAdmin() {
   // refresh list
   const refreshProducts = async () => {
     try {
-      const res = await axios.get('http://localhost/elctro_Ecom_project/admin/api/TestProduct')
+      const res = await axios.get(`${import.meta.env.VITE_BASE_API_URL}/TestProduct`)
       const list = Array.isArray(res.data)
         ? res.data
         : res.data?.test_products ?? res.data?.data ?? res.data?.items ?? []
@@ -319,7 +319,7 @@ function ProductsAdmin() {
   const handleDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this product?')) return
     try {
-      const res = await axios.delete('http://localhost/elctro_Ecom_project/admin/api/TestProduct/delete', { data: { id } })
+      const res = await axios.delete(`${import.meta.env.VITE_BASE_API_URL}/TestProduct/delete`, { data: { id } })
       console.log(res)
       if (res.status === 200) {
         toast.success('Product deleted')
@@ -473,8 +473,8 @@ fd.append("recommendedIds", JSON.stringify(
       // 4) API CALL
       // ---------------------------
       const url = editingId
-        ? "http://localhost/elctro_Ecom_project/admin/api/TestProduct/update"
-        : "http://localhost/elctro_Ecom_project/admin/api/TestProduct/save";
+        ? `${import.meta.env.VITE_BASE_API_URL}/TestProduct/update`
+        : `${import.meta.env.VITE_BASE_API_URL}/TestProduct/save`;
 
       const res = await axios.post(url, fd, {
         headers: { "Content-Type": "multipart/form-data" }

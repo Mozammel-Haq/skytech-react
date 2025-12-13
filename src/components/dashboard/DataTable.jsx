@@ -75,9 +75,45 @@ function DataTable({ columns, rows, actions = [], rowsPerPageOptions = [5, 10, 2
         className="max-w-40 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 px-3 py-2 text-sm text-neutral-900 dark:text-white"
       />
 
-      {/* Table */}
-      <div className="overflow-x-auto rounded-2xl border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 shadow-sm">
-        <table className="min-w-full text-sm table-auto">
+      <div className="md:hidden space-y-3">
+        {paginatedRows.map((row, idx) => (
+          <div key={row.id ?? idx} className="rounded-2xl border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 p-3">
+            <div className="flex items-center justify-between">
+              <input
+                type="checkbox"
+                checked={selectedRows.includes(row.id)}
+                onChange={() => toggleSelectRow(row.id)}
+                className="w-4 h-4 cursor-pointer"
+              />
+              {actions.length > 0 && (
+                <div className="flex gap-2">
+                  {actions.map((a) => (
+                    <button
+                      key={a.key}
+                      type="button"
+                      onClick={() => a.onClick(row)}
+                      className="rounded-full border border-neutral-200 px-3 py-1 text-xs font-semibold dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-800"
+                    >
+                      {a.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="mt-2 grid gap-1">
+              {columns.map((c) => (
+                <div key={c.key} className="flex items-center justify-between text-xs text-neutral-900 dark:text-neutral-100">
+                  <span className="font-semibold">{c.label}</span>
+                  <span className="text-right">{row[c.key]}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="hidden md:block overflow-x-auto rounded-2xl border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 shadow-sm">
+        <table className="min-w-[640px] w-full text-sm table-auto">
           <thead className="bg-neutral-50 dark:bg-neutral-800">
   <tr className="whitespace-nowrap">
     {/* Select All */}

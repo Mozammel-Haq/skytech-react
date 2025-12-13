@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { FiShoppingCart, FiHeart, FiUser, FiBarChart2 } from 'react-icons/fi'
+import { FiShoppingCart, FiHeart, FiUser, FiBarChart2, FiSearch } from 'react-icons/fi'
 import { useMemo, useState } from 'react'
 import { useCart } from '../../context/CartContext.jsx'
 import { useWishlist } from '../../context/WishlistContext.jsx'
@@ -23,6 +23,7 @@ function Header() {
 
   // Dropdown hover state
   const [openDropdown, setOpenDropdown] = useState(false)
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
 
   return (
     <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/90 backdrop-blur-md shadow-sm dark:bg-surface-dark dark:border-neutral-700">
@@ -48,6 +49,17 @@ function Header() {
         {/* Action Icons */}
         <nav aria-label="Quick actions" className="flex items-center gap-1 sm:gap-4 relative">
           <ThemeToggle />
+
+          {/* Mobile Search Toggle */}
+          <button
+            type="button"
+            title="Search"
+            onClick={() => setMobileSearchOpen((v) => !v)}
+            className="inline-flex lg:hidden items-center justify-center rounded-full p-[0.65rem] text-neutral-700 hover:bg-neutral-100 transition-all duration-200 dark:text-neutral-200 dark:hover:bg-neutral-700"
+            aria-label="Search"
+          >
+            <FiSearch className="text-md" />
+          </button>
 
           {/* Wishlist */}
           <Link
@@ -166,11 +178,18 @@ function Header() {
         </nav>
       </div>
 
-      {/* Compact Search for Mobile */}
-      {location.pathname !== '/' && (
-        <div className="border-t border-neutral-200 bg-white/80 py-3 lg:hidden shadow-sm dark:bg-neutral-800 dark:border-neutral-700">
-          <div className="container">
+      {/* Mobile Search Drawer */}
+      {mobileSearchOpen && (
+        <div className="border-t border-neutral-200 bg-white/90 py-3 lg:hidden shadow-sm dark:bg-neutral-800 dark:border-neutral-700">
+          <div className="container flex items-center gap-3">
             <SearchBar compact />
+            <button
+              type="button"
+              onClick={() => setMobileSearchOpen(false)}
+              className="rounded-full border border-neutral-200 px-3 py-2 text-sm dark:border-neutral-700 dark:text-neutral-200"
+            >
+              Close
+            </button>
           </div>
         </div>
       )}

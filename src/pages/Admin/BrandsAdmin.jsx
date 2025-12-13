@@ -36,7 +36,7 @@ function BrandsAdmin() {
   const getId = (obj) => (obj?.id ?? obj?.brand_id ?? obj?.slug ?? obj?.name ?? '').toString()
   const refreshBrands = async () => {
     try {
-      const bRes = await axios.get('http://localhost/elctro_Ecom_project/admin/api/TestProductBrand')
+      const bRes = await axios.get(`${import.meta.env.VITE_BASE_API_URL}/TestProductBrand`)
       const list = Array.isArray(bRes.data)
         ? bRes.data
         : (bRes.data?.test_product_brands ?? bRes.data?.data ?? bRes.data?.items ?? [])
@@ -95,8 +95,8 @@ function BrandsAdmin() {
       formData.append('origin', origin)
 
       const url = editingId
-        ? 'http://localhost/elctro_Ecom_project/admin/api/TestProductBrand/update'
-        : 'http://localhost/elctro_Ecom_project/admin/api/TestProductBrand/save'
+        ? `${import.meta.env.VITE_BASE_API_URL}/TestProductBrand/update`
+        : `${import.meta.env.VITE_BASE_API_URL}/TestProductBrand/save`
 
       const res = await axios.post(url, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
@@ -149,7 +149,7 @@ function BrandsAdmin() {
     if (!confirm("Are you sure you want to delete this brand?")) return
     try {
       const res = await axios.delete(
-        'http://localhost/elctro_Ecom_project/admin/api/TestProductBrand/delete',
+        `${import.meta.env.VITE_BASE_API_URL}/TestProductBrand/delete`,
         { data: { id } }
       )
       if (res.status === 200) {

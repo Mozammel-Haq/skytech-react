@@ -120,13 +120,13 @@ function SearchBar({ compact = false }) {
   }
 
   return (
-    <div ref={containerRef} className={clsx('relative w-full', compact ? 'max-w-xl' : 'max-w-3xl')}>
+    <div ref={containerRef} className={clsx('relative w-full', compact ? 'max-w-md' : 'max-w-lg')}>
       <form
         onSubmit={handleSubmit}
         className="flex w-full items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2 shadow-sm dark:bg-neutral-700 dark:border-neutral-600"
       >
         {/* Category dropdown */}
-        <div className="relative" ref={dropdownRef}>
+        <div className="relative hidden lg:block" ref={dropdownRef}>
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}

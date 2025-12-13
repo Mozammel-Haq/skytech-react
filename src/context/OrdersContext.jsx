@@ -19,7 +19,7 @@ const initialState = {
   orders: [],
 }
 
-const API_BASE = 'http://localhost/elctro_Ecom_project/admin/api'
+const API_BASE = import.meta.env.VITE_BASE_API_URL
 const ORDERS_ENDPOINT = `${API_BASE}/testorder`
 const SAVE_ENDPOINT = `${API_BASE}/testorder/save`
 
