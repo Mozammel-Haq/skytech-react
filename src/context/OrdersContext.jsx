@@ -229,15 +229,17 @@ const deleteOrder = useCallback(async (id) => {
   const createOrder = useCallback(async (order) => {
     try {
       const res = await axios.post(SAVE_ENDPOINT, order)
-      console.log('Create Success:', res)
       const data = res?.data
       const raw = Array.isArray(data) ? data[0] : data?.order ?? data
-      const created = normalizeOrder(raw ?? order)
+      const merged = { ...order, ...(raw || {}) }
+      const created = normalizeOrder(merged)
       dispatch({ type: 'ADD_ORDER', payload: created })
       return created
     } catch (err) {
-      dispatch({ type: 'ADD_ORDER', payload: order })
-      return order
+      // optimistic add with client-side data
+      const created = normalizeOrder(order)
+      dispatch({ type: 'ADD_ORDER', payload: created })
+      return created
     }
   }, [])
 

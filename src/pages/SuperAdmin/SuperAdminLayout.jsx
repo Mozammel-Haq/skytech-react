@@ -35,7 +35,6 @@ function SuperAdminLayout() {
               { label: 'Returns', to: '/super-admin/returns', icon: FiRotateCcw },
             ],
           },
-          { label: 'Homepage', to: '/super-admin/homepage', icon: FiHome },
           {
             label: 'Users',
             icon: FiUsers,
@@ -46,8 +45,10 @@ function SuperAdminLayout() {
             ],
           },
           { label: 'Roles', to: '/super-admin/roles', icon: FiShield, roles: ['super_admin'] },
+                    { label: 'Homepage', to: '/super-admin/homepage', icon: FiHome },
           { label: 'Settings', to: '/super-admin/settings', icon: FiSettings, roles: ['super_admin'] },
           { label: 'Analytics', to: '/super-admin/analytics', icon: FiBarChart2, roles: ['super_admin'] },
+          
         ]}
       >
         <Outlet />

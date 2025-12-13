@@ -25,7 +25,19 @@ function OrdersAdmin() {
     id: o.id,
     orderNumber: o.orderNumber,
     userId: "User-00" + o.userId,
-    status: o.status.charAt(0).toUpperCase() + o.status.slice(1),
+    status: (
+      <span
+        className={`px-2 py-1 rounded text-xs ${
+          o.status === 'pending'
+            ? 'bg-yellow-100 text-yellow-800'
+            : o.status === 'delivered'
+            ? 'bg-green-100 text-green-800'
+            : 'bg-neutral-100 text-neutral-800'
+        }`}
+      >
+        {o.status.charAt(0).toUpperCase() + o.status.slice(1)}
+      </span>
+    ),
     placedAt: dayjs(o.placedAt).format('YYYY-MM-DD HH:mm'),
     fulfilledAt: o.fulfilledAt ? dayjs(o.fulfilledAt).format('YYYY-MM-DD HH:mm') : '-',
     total: `$${o.total.toFixed(2)}`,

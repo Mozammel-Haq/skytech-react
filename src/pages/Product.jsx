@@ -252,8 +252,8 @@ function Product() {
                 >
                   {product.brand}
                 </Link>
-                <span className="text-sm font-semibold text-primary">
-                  {product.rating}★ ({product.reviewsCount})
+                <span className="text-sm font-semibold text-yellow-500">
+                  {product.rating} ★  ({product.reviewsCount})
                 </span>
               </div>
 
@@ -441,8 +441,8 @@ function Product() {
 
                 {tab === "reviews" && (
                   <div className="space-y-4">
-                    <p className="text-sm text-neutral-600">
-                      Rated {product.rating}★ by {product.reviewsCount} customers
+                    <p className="text-sm">
+                      Rated {product.rating} <span className=" text-yellow-500">★ </span>  by {product.reviewsCount} customers
                     </p>
 
                     <form
@@ -491,7 +491,7 @@ function Product() {
                       <select
                         value={rating}
                         onChange={(e) => setRating(Number(e.target.value))}
-                        className="h-11 w-full rounded-xl border border-neutral-200 px-3 text-sm"
+                        className="h-11 w-full rounded-xl border border-neutral-200 px-3 text-sm text-yellow-500"
                       >
                         <option value={5}>5 ★★★★★</option>
                         <option value={4}>4 ★★★★</option>
@@ -569,9 +569,9 @@ function Product() {
               src={`${import.meta.env.VITE_BASE_MEDIA_URL}/products/${activeImageName}`}
               alt={product.title}
               initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
+              animate={{ scale: 1.5 }}
               exit={{ scale: 0.9 }}
-              className="absolute left-1/2 top-1/2 max-h-[80vh] w-auto -translate-x-1/2 -translate-y-1/2 object-contain"
+              className="absolute left-[40%] top-1/3 max-h-[90vh] w-auto -translate-x-1/2 -translate-y-1/2 object-cover"
             />
           </motion.div>
         )}

@@ -660,7 +660,7 @@ fd.append("recommendedIds", JSON.stringify(
           </div>
 
           {/* Tab Panels */}
-          <form onSubmit={handleAddOrEdit} className="space-y-4">
+          <div className="space-y-4">
             {/* Basic Info */}
             {activeTab === 'basic' && (
               <div className="grid grid-cols-1 gap-3">
@@ -863,7 +863,17 @@ fd.append("recommendedIds", JSON.stringify(
                   <input type="file" accept="image/*" onChange={handleThumbnailChange} />
                   {form.thumbnail && (
                     <div className="mt-2 w-40 h-40 border rounded overflow-hidden">
-                      <img src={`${import.meta.env.VITE_BASE_MEDIA_URL}/products/${form.thumbnail}`} alt="thumb" className="w-full h-full object-cover" />
+                      <img
+                        src={
+                          (() => {
+                            const t = String(form.thumbnail || '')
+                            const isBlobOrUrl = t.startsWith('blob:') || /^https?:/i.test(t)
+                            return isBlobOrUrl ? t : `${import.meta.env.VITE_BASE_MEDIA_URL}/products/${t}`
+                          })()
+                        }
+                        alt="thumb"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   )}
                 </div>
@@ -879,7 +889,11 @@ fd.append("recommendedIds", JSON.stringify(
                     {form.gallery.map((img, i) => {
                       const name = typeof img === 'string' ? img : img?.name
                       const previewSrc = img?.preview
-                      const src = previewSrc || (name ? `${import.meta.env.VITE_BASE_MEDIA_URL}/products/${name}` : '')
+                      const src = previewSrc || (name
+                        ? ((String(name).startsWith('blob:') || /^https?:/i.test(String(name)))
+                          ? String(name)
+                          : `${import.meta.env.VITE_BASE_MEDIA_URL}/products/${name}`)
+                        : '')
                       return (
                         <div key={i} className="relative w-full h-28 border rounded overflow-hidden">
                           <img src={src} alt={`g-${i}`} className="object-cover w-full h-full" />
@@ -993,7 +1007,7 @@ fd.append("recommendedIds", JSON.stringify(
                 </div>
               </div>
             )}
-          </form>
+          </div>
         </div>
       </DashboardModal>
     </>
