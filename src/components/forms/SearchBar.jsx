@@ -120,7 +120,7 @@ function SearchBar({ compact = false }) {
   }
 
   return (
-    <div ref={containerRef} className={clsx('relative w-full', compact ? 'max-w-md' : 'max-w-lg')}>
+    <div ref={containerRef} className={clsx('relative w-full', compact ? 'max-w-md' : 'max-w-3xl')}>
       <form
         onSubmit={handleSubmit}
         className="flex w-full items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2 shadow-sm dark:bg-neutral-700 dark:border-neutral-600"
