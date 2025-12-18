@@ -26,7 +26,7 @@ function CategoriesAdmin() {
   const [preview, setPreview] = useState('') // preview url or existing image url
 
   // API endpoints (change if needed)
-  const API_BASE = import.meta.env.VITE_BASE_API_URL
+  const API_BASE = 'http://localhost/elctro_Ecom_project/admin/api'
   const ENDPOINT = `${API_BASE}/TestProductCategory`
 
   // helper: slugify

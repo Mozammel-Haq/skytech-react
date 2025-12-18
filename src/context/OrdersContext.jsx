@@ -19,7 +19,7 @@ const initialState = {
   orders: [],
 }
 
-const API_BASE = import.meta.env.VITE_BASE_API_URL
+const API_BASE = 'http://localhost/elctro_Ecom_project/admin/api'
 const ORDERS_ENDPOINT = `${API_BASE}/testorder`
 const SAVE_ENDPOINT = `${API_BASE}/testorder/save`
 
@@ -229,17 +229,15 @@ const deleteOrder = useCallback(async (id) => {
   const createOrder = useCallback(async (order) => {
     try {
       const res = await axios.post(SAVE_ENDPOINT, order)
+      console.log('Create Success:', res)
       const data = res?.data
       const raw = Array.isArray(data) ? data[0] : data?.order ?? data
-      const merged = { ...order, ...(raw || {}) }
-      const created = normalizeOrder(merged)
+      const created = normalizeOrder(raw ?? order)
       dispatch({ type: 'ADD_ORDER', payload: created })
       return created
     } catch (err) {
-      // optimistic add with client-side data
-      const created = normalizeOrder(order)
-      dispatch({ type: 'ADD_ORDER', payload: created })
-      return created
+      dispatch({ type: 'ADD_ORDER', payload: order })
+      return order
     }
   }, [])
 

@@ -117,7 +117,7 @@ export function ProductProvider({ children }) {
       newArrival: Boolean(p?.newArrival),
       onSale: Boolean(p?.onSale),
       bestValue: Boolean(p?.bestValue),
-      dealEndTime: (p?.dealEndTime ?? p?.deal_end_time ?? null) || null,
+      dealEndTime: p?.dealEndTime ?? null,
       shortSpecs: Array.isArray(p?.shortSpecs) ? p.shortSpecs : [],
       highlights: Array.isArray(p?.highlights) ? p.highlights : [],
       shippingEstimate: p?.shippingEstimate ?? null,
@@ -144,11 +144,10 @@ export function ProductProvider({ children }) {
   useEffect(() => {
     const loadAll = async () => {
       try {
-        const API_BASE = import.meta.env.VITE_BASE_API_URL
         const [pRes, cRes, bRes] = await Promise.all([
-          axios.get(`${API_BASE}/TestProduct`),
-          axios.get(`${API_BASE}/TestProductCategory`),
-          axios.get(`${API_BASE}/TestProductBrand`),
+          axios.get('http://localhost/elctro_Ecom_project/admin/api/TestProduct'),
+          axios.get('http://localhost/elctro_Ecom_project/admin/api/TestProductCategory'),
+          axios.get('http://localhost/elctro_Ecom_project/admin/api/TestProductBrand'),
         ])
 
         dispatch({
@@ -251,8 +250,7 @@ export function ProductProvider({ children }) {
       state.products.find(
         (p) =>
           Array.isArray(p.badges) &&
-          p.badges.some((b) => (typeof b === 'string' ? b : b?.badge) === 'Hot') &&
-          p.dealEndTime !== null
+          p.badges.some((b) => (typeof b === 'string' ? b : b?.badge) === 'Hot')
       ) ?? null,
     [state.products]
   )

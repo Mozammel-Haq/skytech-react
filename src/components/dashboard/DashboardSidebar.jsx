@@ -36,7 +36,7 @@ function DashboardSidebar({ sections = [] }) {
   }
 
   return (
-    <aside className="rounded-2xl border border-neutral-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-900 lg:sticky lg:top-0 lg:h-screen">
+    <aside className="sticky top-0 h-screen rounded-2xl border border-neutral-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-900">
       <nav className="space-y-1">
         {items.map((item) => {
           const key = item.label

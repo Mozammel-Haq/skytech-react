@@ -467,7 +467,7 @@ function Product() {
                             review: reviewText.trim(),
                           };
                           const { data } = await axios.post(
-                            `${import.meta.env.VITE_BASE_API_URL}/testproductreview/save`,
+                            "http://localhost/elctro_Ecom_project/admin/api/testproductreview/save",
                             payload,
                             user?.token
                               ? { headers: { Authorization: `Bearer ${user.token}` } }

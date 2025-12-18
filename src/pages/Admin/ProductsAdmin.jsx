@@ -73,7 +73,7 @@ function ProductsAdmin() {
   // refresh list
   const refreshProducts = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_BASE_API_URL}/TestProduct`)
+      const res = await axios.get('http://localhost/elctro_Ecom_project/admin/api/TestProduct')
       const list = Array.isArray(res.data)
         ? res.data
         : res.data?.test_products ?? res.data?.data ?? res.data?.items ?? []
@@ -319,7 +319,7 @@ function ProductsAdmin() {
   const handleDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this product?')) return
     try {
-      const res = await axios.delete(`${import.meta.env.VITE_BASE_API_URL}/TestProduct/delete`, { data: { id } })
+      const res = await axios.delete('http://localhost/elctro_Ecom_project/admin/api/TestProduct/delete', { data: { id } })
       console.log(res)
       if (res.status === 200) {
         toast.success('Product deleted')
@@ -473,8 +473,8 @@ fd.append("recommendedIds", JSON.stringify(
       // 4) API CALL
       // ---------------------------
       const url = editingId
-        ? `${import.meta.env.VITE_BASE_API_URL}/TestProduct/update`
-        : `${import.meta.env.VITE_BASE_API_URL}/TestProduct/save`;
+        ? "http://localhost/elctro_Ecom_project/admin/api/TestProduct/update"
+        : "http://localhost/elctro_Ecom_project/admin/api/TestProduct/save";
 
       const res = await axios.post(url, fd, {
         headers: { "Content-Type": "multipart/form-data" }
@@ -660,7 +660,7 @@ fd.append("recommendedIds", JSON.stringify(
           </div>
 
           {/* Tab Panels */}
-          <div className="space-y-4">
+          <form onSubmit={handleAddOrEdit} className="space-y-4">
             {/* Basic Info */}
             {activeTab === 'basic' && (
               <div className="grid grid-cols-1 gap-3">
@@ -863,17 +863,7 @@ fd.append("recommendedIds", JSON.stringify(
                   <input type="file" accept="image/*" onChange={handleThumbnailChange} />
                   {form.thumbnail && (
                     <div className="mt-2 w-40 h-40 border rounded overflow-hidden">
-                      <img
-                        src={
-                          (() => {
-                            const t = String(form.thumbnail || '')
-                            const isBlobOrUrl = t.startsWith('blob:') || /^https?:/i.test(t)
-                            return isBlobOrUrl ? t : `${import.meta.env.VITE_BASE_MEDIA_URL}/products/${t}`
-                          })()
-                        }
-                        alt="thumb"
-                        className="w-full h-full object-cover"
-                      />
+                      <img src={`${import.meta.env.VITE_BASE_MEDIA_URL}/products/${form.thumbnail}`} alt="thumb" className="w-full h-full object-cover" />
                     </div>
                   )}
                 </div>
@@ -889,11 +879,7 @@ fd.append("recommendedIds", JSON.stringify(
                     {form.gallery.map((img, i) => {
                       const name = typeof img === 'string' ? img : img?.name
                       const previewSrc = img?.preview
-                      const src = previewSrc || (name
-                        ? ((String(name).startsWith('blob:') || /^https?:/i.test(String(name)))
-                          ? String(name)
-                          : `${import.meta.env.VITE_BASE_MEDIA_URL}/products/${name}`)
-                        : '')
+                      const src = previewSrc || (name ? `${import.meta.env.VITE_BASE_MEDIA_URL}/products/${name}` : '')
                       return (
                         <div key={i} className="relative w-full h-28 border rounded overflow-hidden">
                           <img src={src} alt={`g-${i}`} className="object-cover w-full h-full" />
@@ -1007,7 +993,7 @@ fd.append("recommendedIds", JSON.stringify(
                 </div>
               </div>
             )}
-          </div>
+          </form>
         </div>
       </DashboardModal>
     </>

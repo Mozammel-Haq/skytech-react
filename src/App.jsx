@@ -4,17 +4,15 @@ import { HelmetProvider } from 'react-helmet-async'
 import { ToastContainer } from 'react-toastify'
 import AppRoutes from './routes/AppRoutes.jsx'
 import AppProviders from './context/AppProviders.jsx'
-import { useTheme } from './context/ThemeContext.jsx'
 import 'react-toastify/dist/ReactToastify.css'
 import './index.css'
 
 function App() {
-  const { theme } = useTheme()
   return (
     <HelmetProvider>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <AppProviders>
-          <div className="min-h-screen bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100 transition-colors">
+          <div className="min-h-screen bg-neutral-50 text-neutral-900">
             <Suspense fallback={<div className="flex h-screen items-center justify-center">Loading...</div>}>
               <AppRoutes />
             </Suspense>
@@ -28,7 +26,7 @@ function App() {
               pauseOnFocusLoss
               draggable
               pauseOnHover
-              theme={theme === 'dark' ? 'dark' : 'light'}
+              theme="light"
             />
           </div>
         </AppProviders>

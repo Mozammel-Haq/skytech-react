@@ -39,18 +39,16 @@ function Checkout() {
     const id = `ord-${Math.floor(5000 + Math.random() * 5000)}`
     const orderNumber = `SKY-${id.split('-')[1]}`
     const newOrder = {
-  id,
   orderNumber,
   userId: user?.id ?? 'guest',
   status: 'pending',           // only once
   placedAt: dayjs().toISOString(),
   fulfilledAt: null,
-  items: items.map((i) => ({
-    id: i.id,
-    product_id: i.id,
-    title: i.title,
-    quantity: i.quantity,
-    price: i.price
+  items: items.map((i) => ({ 
+    product_id: i.id, 
+    title: i.title, 
+    quantity: i.quantity, 
+    price: i.price 
   })),
   subtotal: orderTotals.subtotal,
   shipping: orderTotals.shipping,
